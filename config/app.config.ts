@@ -55,22 +55,14 @@ export const appConfig = {
 
     // Available models (ordered by recommendation)
     availableModels: [
-      // 🔥 Google Gemini - FREE tier!
-      // 🔥 Google Gemini 3 - NEWEST (December 2025)!
-      'google/gemini-3-flash',             // Lançado 17/12/2025 - 3x mais rápido!
-      'google/gemini-3-flash-preview',     // Preview version
-      // Google Gemini 2.5
-      'google/gemini-2.5-flash',
-      'google/gemini-2.5-pro',
-      // Google Gemini 2.0 - Still great and FREE!
-      'google/gemini-2.0-flash',
-      'google/gemini-2.0-flash-exp',
-      // OpenRouter FREE models
-      'openrouter/google/gemini-3-flash:free',
-      'openrouter/google/gemini-2.0-flash-exp:free',
+      // 🆓 OpenRouter FREE models - WORKING!
       'openrouter/meta-llama/llama-3.1-70b-instruct:free',
       'openrouter/mistralai/mistral-7b-instruct:free',
-      // Premium models
+      'openrouter/google/gemini-2.0-flash-exp:free',
+      // ⚠️ Google Gemini - May have quota limits!
+      'google/gemini-2.0-flash',
+      'google/gemini-2.0-flash-exp',
+      // Premium models (require paid API keys)
       'openai/gpt-4o',
       'anthropic/claude-sonnet-4-20250514',
       'moonshotai/kimi-k2-instruct-0905',
@@ -78,20 +70,13 @@ export const appConfig = {
 
     // Model display names
     modelDisplayNames: {
-      // 🔥 Google Gemini 3 - NEWEST!
-      'google/gemini-3-flash': '🚀 Gemini 3 Flash (NOVO!)',
-      'google/gemini-3-flash-preview': '🧪 Gemini 3 Flash Preview',
-      // Google Gemini 2.5
-      'google/gemini-2.5-flash': '⚡ Gemini 2.5 Flash',
-      'google/gemini-2.5-pro': '💎 Gemini 2.5 Pro',
-      // Google Gemini 2.0
-      'google/gemini-2.0-flash': '⚡ Gemini 2.0 Flash (FREE)',
-      'google/gemini-2.0-flash-exp': '🧪 Gemini 2.0 Flash Exp',
-      // OpenRouter FREE
-      'openrouter/google/gemini-3-flash:free': '🆓 Gemini 3 Flash (OpenRouter)',
-      'openrouter/google/gemini-2.0-flash-exp:free': '🆓 Gemini 2.0 Flash (OpenRouter)',
-      'openrouter/meta-llama/llama-3.1-70b-instruct:free': '🆓 Llama 3.1 70B (OpenRouter)',
-      'openrouter/mistralai/mistral-7b-instruct:free': '🆓 Mistral 7B (OpenRouter)',
+      // 🆓 OpenRouter FREE - WORKING!
+      'openrouter/meta-llama/llama-3.1-70b-instruct:free': '🆓 Llama 3.1 70B (FREE)',
+      'openrouter/mistralai/mistral-7b-instruct:free': '🆓 Mistral 7B (FREE)',
+      'openrouter/google/gemini-2.0-flash-exp:free': '🆓 Gemini 2.0 (OpenRouter)',
+      // ⚠️ Google Gemini - May have quota limits!
+      'google/gemini-2.0-flash': '⚠️ Gemini 2.0 Flash',
+      'google/gemini-2.0-flash-exp': '⚠️ Gemini 2.0 Flash Exp',
       // Premium
       'openai/gpt-4o': 'GPT-4o',
       'anthropic/claude-sonnet-4-20250514': 'Claude Sonnet 4',
@@ -100,32 +85,7 @@ export const appConfig = {
 
     // Model API configuration - map display names to actual API model names
     modelApiConfig: {
-      // Z.AI GLM models - OpenAI-compatible API
-      'zai/glm-4.7': {
-        provider: 'zai',
-        model: 'glm-4.7'
-      },
-      'zai/glm-4.5-air': {
-        provider: 'zai',
-        model: 'glm-4.5-air'
-      },
-      // Google Gemini models - explicit mapping to correct API names
-      'google/gemini-3-flash': {
-        provider: 'google',
-        model: 'gemini-2.0-flash'  // Gemini 3 Flash uses this API name
-      },
-      'google/gemini-3-flash-preview': {
-        provider: 'google',
-        model: 'gemini-2.0-flash-exp'
-      },
-      'google/gemini-2.5-flash': {
-        provider: 'google',
-        model: 'gemini-2.0-flash'  // 2.5 Flash API name
-      },
-      'google/gemini-2.5-pro': {
-        provider: 'google',
-        model: 'gemini-1.5-pro'  // 2.5 Pro API name
-      },
+      // Google Gemini models
       'google/gemini-2.0-flash': {
         provider: 'google',
         model: 'gemini-2.0-flash'
@@ -139,11 +99,7 @@ export const appConfig = {
         provider: 'groq',
         model: 'moonshotai/kimi-k2-instruct-0905'
       },
-      // OpenRouter models - use OpenAI-compatible API
-      'openrouter/google/gemini-3-flash:free': {
-        provider: 'openrouter',
-        model: 'google/gemini-2.0-flash-exp:free'
-      },
+      // OpenRouter models - FREE!
       'openrouter/google/gemini-2.0-flash-exp:free': {
         provider: 'openrouter',
         model: 'google/gemini-2.0-flash-exp:free'
