@@ -4,7 +4,7 @@ import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
-type ProviderName = 'openai' | 'anthropic' | 'groq' | 'google' | 'openrouter';
+type ProviderName = 'openai' | 'anthropic' | 'groq' | 'google' | 'openrouter' | 'zai';
 
 // Client function type returned by @ai-sdk providers
 export type ProviderClient =
@@ -26,11 +26,15 @@ const isUsingAIGateway = !!aiGatewayApiKey;
 const openRouterApiKey = process.env.OPENROUTER_API_KEY;
 const openRouterBaseURL = 'https://openrouter.ai/api/v1';
 
+// Z.AI GLM configuration - OpenAI compatible API
+const zaiApiKey = process.env.ZAI_API_KEY;
+const zaiBaseURL = 'https://api.z.ai/api/paas/v4';
+
 // Cache provider clients by a stable key to avoid recreating
 const clientCache = new Map<string, ProviderClient>();
 
 function getEnvDefaults(provider: ProviderName): { apiKey?: string; baseURL?: string } {
-  if (isUsingAIGateway && provider !== 'openrouter') {
+  if (isUsingAIGateway && provider !== 'openrouter' && provider !== 'zai') {
     return { apiKey: aiGatewayApiKey, baseURL: aiGatewayBaseURL };
   }
 
@@ -45,13 +49,15 @@ function getEnvDefaults(provider: ProviderName): { apiKey?: string; baseURL?: st
       return { apiKey: process.env.GEMINI_API_KEY, baseURL: process.env.GEMINI_BASE_URL };
     case 'openrouter':
       return { apiKey: openRouterApiKey, baseURL: openRouterBaseURL };
+    case 'zai':
+      return { apiKey: zaiApiKey, baseURL: zaiBaseURL };
     default:
       return {};
   }
 }
 
 function getOrCreateClient(provider: ProviderName, apiKey?: string, baseURL?: string): ProviderClient {
-  const effective = (isUsingAIGateway && provider !== 'openrouter')
+  const effective = (isUsingAIGateway && provider !== 'openrouter' && provider !== 'zai')
     ? { apiKey: aiGatewayApiKey, baseURL: aiGatewayBaseURL }
     : { apiKey, baseURL };
 
@@ -83,6 +89,13 @@ function getOrCreateClient(provider: ProviderName, apiKey?: string, baseURL?: st
           'HTTP-Referer': process.env.OPENROUTER_REFERER || 'https://open-lovable.vercel.app',
           'X-Title': 'Open Lovable'
         }
+      });
+      break;
+    case 'zai':
+      // Z.AI GLM uses OpenAI-compatible API
+      client = createOpenAI({
+        apiKey: effective.apiKey || getEnvDefaults('zai').apiKey,
+        baseURL: effective.baseURL ?? getEnvDefaults('zai').baseURL,
       });
       break;
     default:

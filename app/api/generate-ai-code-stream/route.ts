@@ -44,6 +44,12 @@ const openai = createOpenAI({
   baseURL: isUsingAIGateway ? aiGatewayBaseURL : process.env.OPENAI_BASE_URL,
 });
 
+// Z.AI GLM client - OpenAI-compatible API
+const zai = createOpenAI({
+  apiKey: process.env.ZAI_API_KEY,
+  baseURL: 'https://api.z.ai/api/paas/v4',
+});
+
 // Helper function to analyze user preferences from conversation history
 function analyzeUserPreferences(messages: ConversationMessage[]): {
   commonPatterns: string[];
@@ -1221,6 +1227,7 @@ MORPH FAST APPLY MODE (EDIT-ONLY):
         let isOpenAI = model.startsWith('openai/');
         let isKimiGroq = model === 'moonshotai/kimi-k2-instruct-0905';
         let isOpenRouter = model.startsWith('openrouter/');
+        let isZai = model.startsWith('zai/');
 
         // Override based on modelApiConfig
         if (modelConfig) {
@@ -1230,12 +1237,14 @@ MORPH FAST APPLY MODE (EDIT-ONLY):
           isOpenAI = provider === 'openai';
           isKimiGroq = provider === 'groq';
           isOpenRouter = provider === 'openrouter';
+          isZai = provider === 'zai';
         }
 
         const modelProvider = isAnthropic ? anthropic :
           (isOpenAI ? openai :
             (isGoogle ? googleGenerativeAI :
-              (isKimiGroq ? groq : groq)));
+              (isZai ? zai :
+                (isKimiGroq ? groq : groq))));
 
         // Fix model name transformation for different providers
         let actualModel: string;
@@ -1254,11 +1263,13 @@ MORPH FAST APPLY MODE (EDIT-ONLY):
         } else if (isGoogle) {
           // Google uses specific model names - convert our naming to theirs  
           actualModel = model.replace('google/', '');
+        } else if (isZai) {
+          actualModel = model.replace('zai/', '');
         } else {
           actualModel = model;
         }
 
-        console.log(`[generate-ai-code-stream] Using provider: ${isAnthropic ? 'Anthropic' : isGoogle ? 'Google' : isOpenAI ? 'OpenAI' : isOpenRouter ? 'OpenRouter' : 'Groq'}, model: ${actualModel}`);
+        console.log(`[generate-ai-code-stream] Using provider: ${isAnthropic ? 'Anthropic' : isGoogle ? 'Google' : isOpenAI ? 'OpenAI' : isZai ? 'Z.AI' : isOpenRouter ? 'OpenRouter' : 'Groq'}, model: ${actualModel}`);
         console.log(`[generate-ai-code-stream] AI Gateway enabled: ${isUsingAIGateway}`);
         console.log(`[generate-ai-code-stream] Model string: ${model}`);
 

@@ -55,9 +55,12 @@ export const appConfig = {
 
     // Available models (ordered by recommendation)
     availableModels: [
+      // 🔥 Z.AI GLM - FREE with API key!
+      'zai/glm-4.7',                       // Mais recente e poderoso!
+      'zai/glm-4.5-air',                   // Versão otimizada
       // 🔥 Google Gemini 3 - NEWEST (December 2025)!
-      'google/gemini-3-flash',           // Lançado 17/12/2025 - 3x mais rápido!
-      'google/gemini-3-flash-preview',   // Preview version
+      'google/gemini-3-flash',             // Lançado 17/12/2025 - 3x mais rápido!
+      'google/gemini-3-flash-preview',     // Preview version
       // Google Gemini 2.5
       'google/gemini-2.5-flash',
       'google/gemini-2.5-pro',
@@ -77,6 +80,9 @@ export const appConfig = {
 
     // Model display names
     modelDisplayNames: {
+      // 🔥 Z.AI GLM - FREE!
+      'zai/glm-4.7': '🆓 GLM 4.7 (Z.AI)',
+      'zai/glm-4.5-air': '🆓 GLM 4.5 Air (Z.AI)',
       // 🔥 Google Gemini 3 - NEWEST!
       'google/gemini-3-flash': '🚀 Gemini 3 Flash (NOVO!)',
       'google/gemini-3-flash-preview': '🧪 Gemini 3 Flash Preview',
@@ -99,6 +105,15 @@ export const appConfig = {
 
     // Model API configuration - map display names to actual API model names
     modelApiConfig: {
+      // Z.AI GLM models - OpenAI-compatible API
+      'zai/glm-4.7': {
+        provider: 'zai',
+        model: 'glm-4.7'
+      },
+      'zai/glm-4.5-air': {
+        provider: 'zai',
+        model: 'glm-4.5-air'
+      },
       // Google Gemini models - explicit mapping to correct API names
       'google/gemini-3-flash': {
         provider: 'google',
