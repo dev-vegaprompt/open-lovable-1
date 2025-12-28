@@ -47,104 +47,145 @@ export const appConfig = {
     // Working directory in sandbox
     workingDirectory: '/home/user/app',
   },
-  
+
   // AI Model Configuration
   ai: {
-    // Default AI model
-    defaultModel: 'google/gemini-3-pro-preview',
-    
-    // Available models
+    // Default AI model - Gemini 3 Flash is the NEWEST (Dec 17, 2025)! 3x faster than 2.5 Pro!
+    defaultModel: 'google/gemini-3-flash',
+
+    // Available models (ordered by recommendation)
     availableModels: [
-      'openai/gpt-5',
-      'moonshotai/kimi-k2-instruct-0905',
+      // 🔥 Google Gemini 3 - NEWEST (December 2025)!
+      'google/gemini-3-flash',           // Lançado 17/12/2025 - 3x mais rápido!
+      'google/gemini-3-flash-preview',   // Preview version
+      // Google Gemini 2.5
+      'google/gemini-2.5-flash',
+      'google/gemini-2.5-pro',
+      // Google Gemini 2.0 - Still great and FREE!
+      'google/gemini-2.0-flash',
+      'google/gemini-2.0-flash-exp',
+      // OpenRouter FREE models
+      'openrouter/google/gemini-3-flash:free',
+      'openrouter/google/gemini-2.0-flash-exp:free',
+      'openrouter/meta-llama/llama-3.1-70b-instruct:free',
+      'openrouter/mistralai/mistral-7b-instruct:free',
+      // Premium models
+      'openai/gpt-4o',
       'anthropic/claude-sonnet-4-20250514',
-      'google/gemini-3-pro-preview'
+      'moonshotai/kimi-k2-instruct-0905',
     ],
-    
+
     // Model display names
     modelDisplayNames: {
-      'openai/gpt-5': 'GPT-5',
+      // 🔥 Google Gemini 3 - NEWEST!
+      'google/gemini-3-flash': '🚀 Gemini 3 Flash (NOVO!)',
+      'google/gemini-3-flash-preview': '🧪 Gemini 3 Flash Preview',
+      // Google Gemini 2.5
+      'google/gemini-2.5-flash': '⚡ Gemini 2.5 Flash',
+      'google/gemini-2.5-pro': '💎 Gemini 2.5 Pro',
+      // Google Gemini 2.0
+      'google/gemini-2.0-flash': '⚡ Gemini 2.0 Flash (FREE)',
+      'google/gemini-2.0-flash-exp': '🧪 Gemini 2.0 Flash Exp',
+      // OpenRouter FREE
+      'openrouter/google/gemini-3-flash:free': '🆓 Gemini 3 Flash (OpenRouter)',
+      'openrouter/google/gemini-2.0-flash-exp:free': '🆓 Gemini 2.0 Flash (OpenRouter)',
+      'openrouter/meta-llama/llama-3.1-70b-instruct:free': '🆓 Llama 3.1 70B (OpenRouter)',
+      'openrouter/mistralai/mistral-7b-instruct:free': '🆓 Mistral 7B (OpenRouter)',
+      // Premium
+      'openai/gpt-4o': 'GPT-4o',
+      'anthropic/claude-sonnet-4-20250514': 'Claude Sonnet 4',
       'moonshotai/kimi-k2-instruct-0905': 'Kimi K2 (Groq)',
-      'anthropic/claude-sonnet-4-20250514': 'Sonnet 4',
-      'google/gemini-3-pro-preview': 'Gemini 3 Pro (Preview)'
     } as Record<string, string>,
-    
+
     // Model API configuration
     modelApiConfig: {
       'moonshotai/kimi-k2-instruct-0905': {
         provider: 'groq',
         model: 'moonshotai/kimi-k2-instruct-0905'
-      }
+      },
+      // OpenRouter models - use OpenAI-compatible API
+      'openrouter/google/gemini-2.0-flash-exp:free': {
+        provider: 'openrouter',
+        model: 'google/gemini-2.0-flash-exp:free'
+      },
+      'openrouter/meta-llama/llama-3.1-70b-instruct:free': {
+        provider: 'openrouter',
+        model: 'meta-llama/llama-3.1-70b-instruct:free'
+      },
+      'openrouter/mistralai/mistral-7b-instruct:free': {
+        provider: 'openrouter',
+        model: 'mistralai/mistral-7b-instruct:free'
+      },
     },
-    
+
     // Temperature settings for non-reasoning models
     defaultTemperature: 0.7,
-    
+
     // Max tokens for code generation
     maxTokens: 8000,
-    
+
     // Max tokens for truncation recovery
     truncationRecoveryMaxTokens: 4000,
   },
-  
+
   // Code Application Configuration
   codeApplication: {
     // Delay after applying code before refreshing iframe (milliseconds)
     defaultRefreshDelay: 2000,
-    
+
     // Delay when packages are installed (milliseconds)
     packageInstallRefreshDelay: 5000,
-    
+
     // Enable/disable automatic truncation recovery
     enableTruncationRecovery: false, // Disabled - too many false positives
-    
+
     // Maximum number of truncation recovery attempts per file
     maxTruncationRecoveryAttempts: 1,
   },
-  
+
   // UI Configuration
   ui: {
     // Show/hide certain UI elements
     showModelSelector: true,
     showStatusIndicator: true,
-    
+
     // Animation durations (milliseconds)
     animationDuration: 200,
-    
+
     // Toast notification duration (milliseconds)
     toastDuration: 3000,
-    
+
     // Maximum chat messages to keep in memory
     maxChatMessages: 100,
-    
+
     // Maximum recent messages to send as context
     maxRecentMessagesContext: 20,
   },
-  
+
   // Development Configuration
   dev: {
     // Enable debug logging
     enableDebugLogging: true,
-    
+
     // Enable performance monitoring
     enablePerformanceMonitoring: false,
-    
+
     // Log API responses
     logApiResponses: true,
   },
-  
+
   // Package Installation Configuration
   packages: {
     // Use --legacy-peer-deps flag for npm install
     useLegacyPeerDeps: true,
-    
+
     // Package installation timeout (milliseconds)
     installTimeout: 60000,
-    
+
     // Auto-restart Vite after package installation
     autoRestartVite: true,
   },
-  
+
   // File Management Configuration
   files: {
     // Excluded file patterns (files to ignore)
@@ -157,10 +198,10 @@ export const appConfig = {
       '*.log',
       '.DS_Store'
     ],
-    
+
     // Maximum file size to read (bytes)
     maxFileSize: 1024 * 1024, // 1MB
-    
+
     // File extensions to treat as text
     textFileExtensions: [
       '.js', '.jsx', '.ts', '.tsx',
@@ -171,13 +212,13 @@ export const appConfig = {
       '.gitignore', '.dockerignore'
     ],
   },
-  
+
   // API Endpoints Configuration (for external services)
   api: {
     // Retry configuration
     maxRetries: 3,
     retryDelay: 1000, // milliseconds
-    
+
     // Request timeout (milliseconds)
     requestTimeout: 30000,
   }
