@@ -1413,8 +1413,23 @@ It's better to have 3 complete files than 10 incomplete files.`
         // Buffer for incomplete tags
         let tagBuffer = '';
 
+        // Debug: Log before starting stream
+        console.log(`[generate-ai-code-stream] Starting stream with result:`, !!result);
+        console.log(`[generate-ai-code-stream] textStream available:`, !!result?.textStream);
+
+        if (!result) {
+          console.error('[generate-ai-code-stream] ERROR: result is undefined after streamText call');
+          await sendProgress({
+            type: 'error',
+            message: 'Failed to initialize AI stream. Please check your API keys.'
+          });
+          throw new Error('AI stream initialization failed');
+        }
+
         // Stream the response and parse for packages in real-time
+        let streamChunkCount = 0;
         for await (const textPart of result?.textStream || []) {
+          streamChunkCount++;
           const text = textPart || '';
           generatedCode += text;
           currentFile += text;
