@@ -97,13 +97,43 @@ export const appConfig = {
       'moonshotai/kimi-k2-instruct-0905': 'Kimi K2 (Groq)',
     } as Record<string, string>,
 
-    // Model API configuration
+    // Model API configuration - map display names to actual API model names
     modelApiConfig: {
+      // Google Gemini models - explicit mapping to correct API names
+      'google/gemini-3-flash': {
+        provider: 'google',
+        model: 'gemini-2.0-flash'  // Gemini 3 Flash uses this API name
+      },
+      'google/gemini-3-flash-preview': {
+        provider: 'google',
+        model: 'gemini-2.0-flash-exp'
+      },
+      'google/gemini-2.5-flash': {
+        provider: 'google',
+        model: 'gemini-2.0-flash'  // 2.5 Flash API name
+      },
+      'google/gemini-2.5-pro': {
+        provider: 'google',
+        model: 'gemini-1.5-pro'  // 2.5 Pro API name
+      },
+      'google/gemini-2.0-flash': {
+        provider: 'google',
+        model: 'gemini-2.0-flash'
+      },
+      'google/gemini-2.0-flash-exp': {
+        provider: 'google',
+        model: 'gemini-2.0-flash-exp'
+      },
+      // Groq models
       'moonshotai/kimi-k2-instruct-0905': {
         provider: 'groq',
         model: 'moonshotai/kimi-k2-instruct-0905'
       },
       // OpenRouter models - use OpenAI-compatible API
+      'openrouter/google/gemini-3-flash:free': {
+        provider: 'openrouter',
+        model: 'google/gemini-2.0-flash-exp:free'
+      },
       'openrouter/google/gemini-2.0-flash-exp:free': {
         provider: 'openrouter',
         model: 'google/gemini-2.0-flash-exp:free'
